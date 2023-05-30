@@ -1,10 +1,21 @@
 
 import 'package:flutter/material.dart';
 
-class SidemenuProvider {
+class SidemenuProvider extends ChangeNotifier {
 
   static late AnimationController menuController;
   static bool isOpen = false;
+
+  String _currentPage = '';
+
+  String get currentPage {
+    return _currentPage;
+  }
+
+  void setCurrentPageUrl(String routeName) {
+    _currentPage = routeName;
+    Future.delayed(const Duration(milliseconds: 10), () => notifyListeners()); 
+  }
 
   static Animation<double> movement = Tween<double>(begin: -200, end: 0)
     .animate(CurvedAnimation(parent: menuController, curve: Curves.easeInOut));
@@ -22,13 +33,6 @@ class SidemenuProvider {
     menuController.reverse();
   }
 
-  static void toggleMenu() {
-    isOpen ? closeMenu() : opneMenu();
-  }
-
-  // static void toggleMenu() {
-  //   isOpen ? menuController.reverse() : menuController.forward();
-  //   isOpen = !isOpen;
-  // }
+  static void toggleMenu() => isOpen ? closeMenu() : opneMenu();
 
 }

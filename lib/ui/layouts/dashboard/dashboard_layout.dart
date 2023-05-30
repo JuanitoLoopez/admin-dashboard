@@ -45,7 +45,12 @@ class _DashboardLayoutState extends State<DashboardLayout> with SingleTickerProv
                     // Appbar
                     const Navbar(),
                     // View
-                    Expanded(child: widget.child)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: widget.child,
+                      )
+                    )
                   ],
                 ),
               ),
@@ -57,6 +62,19 @@ class _DashboardLayoutState extends State<DashboardLayout> with SingleTickerProv
               animation: SidemenuProvider.menuController,
               builder: (BuildContext context, _) => Stack(
                 children: [
+
+                  if(SidemenuProvider.isOpen)
+                    Opacity(
+                      opacity: SidemenuProvider.opacity.value, 
+                      child: GestureDetector(
+                        onTap: () => SidemenuProvider.closeMenu(),
+                        child: Container(
+                          width: size.width,
+                          height: size.height,
+                          color: Colors.black26.withOpacity(0.5),
+                        ),
+                      ),
+                    ),
 
                   Transform.translate(
                     offset: Offset(SidemenuProvider.movement.value, 0),
